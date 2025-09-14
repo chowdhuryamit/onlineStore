@@ -1,6 +1,13 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../store/authSlice.js';
 
-const ProductCardSpecific = ({ product, onBuyNowClick }) => {
+const ProductCardSpecific = ({ product}) => {
+  const dispatch = useDispatch();
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+    alert('Product added to cart!');
+  }
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col group hover:-translate-y-1 transition-all duration-300 border-2 border-amber-300">
       <div className="relative h-64">
@@ -19,10 +26,10 @@ const ProductCardSpecific = ({ product, onBuyNowClick }) => {
         <div className="flex justify-between items-center">
           <p className="text-2xl font-bold text-green-500">{"\u20B9"} {product.price}</p>
           <button 
-            onClick={() => onBuyNowClick(product)}
+            onClick={handleAddToCart}
             className="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-700 transition-colors duration-300"
           >
-            Buy Now
+            Add to cart
           </button>
         </div>
       </div>

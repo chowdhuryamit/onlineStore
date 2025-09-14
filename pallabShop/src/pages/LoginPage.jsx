@@ -5,8 +5,8 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassKey, setShowPassKey] = useState(false);
 
-  const [password,setPassword] = useState(null);
-  const [passkey,setPasskey] = useState(null);
+  const [password,setPassword] = useState("");
+  const [passkey,setPasskey] = useState("");
 
   const handlePasswordLogin = (e) => {
     e.preventDefault();

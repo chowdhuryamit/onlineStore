@@ -3,6 +3,8 @@ import React from 'react'
 const PurchaseFormModal = ({ product, onClose }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(product);
+        
         // In a real app, you would handle form submission here (e.g., API call)
         alert(`Thank you for your interest in the ${product.name}! Your order has been submitted.`);
         onClose(); // Close modal after submission
@@ -39,10 +41,6 @@ const PurchaseFormModal = ({ product, onClose }) => {
           <div className="mb-6">
             <label htmlFor="phone" className="block text-gray-700 font-medium mb-2">Phone Number</label>
             <input type="tel" id="phone" name="phone" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-shadow" />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="phone" className="block text-gray-700 font-medium mb-2">Quantity</label>
-            <input type="tel" id="phone" name="phone" placeholder='quantity you want like 1 bag or 1 kg or 1 packet' required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-shadow" />
           </div>
           <button type="submit" className="w-full bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition-colors duration-300">
             Place Order
