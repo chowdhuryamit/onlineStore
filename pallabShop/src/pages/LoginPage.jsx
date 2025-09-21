@@ -1,18 +1,38 @@
 import React, { useState } from "react";
-import { Mail, Lock, Fingerprint, Eye, EyeOff } from "lucide-react";
+import { Lock, Eye, EyeOff } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { login } from "../store/authSlice.js";
+import axios from "axios"
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassKey, setShowPassKey] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [password,setPassword] = useState("");
   const [passkey,setPasskey] = useState("");
 
-  const handlePasswordLogin = (e) => {
+  const handlePasswordLogin = async (e) => {
     e.preventDefault();
-    console.log(password);
-    console.log(passkey);
-     
+    try {
+      const response = await axios.post("http://localhost:8000/api/v1/user/login",{password,passkey},{withCredentials:true});
+      if(response.data.success){
+        dispatch(login());
+        setPassword("");
+        setPasskey("");
+        toast.success(response.data.message);
+        navigate("/");
+      }
+      else{
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message||error.message);
+    }
   };
 
   return (

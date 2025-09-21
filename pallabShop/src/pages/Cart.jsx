@@ -31,6 +31,7 @@ const Cart = () => {
   //   },
   // ]);
   const cartFromRedux = useSelector((state) => state.auth.cart);
+
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const Cart = () => {
   const handleQuantityChange = (id, delta) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id
+        item._id === id
           ? { ...item, quantity: Math.max(1, item.quantity + delta) } // min 1
           : item
       )
@@ -56,7 +57,7 @@ const Cart = () => {
    */
   const handleRemoveItem = (productId) => {
     setCartItems((currentItems) =>
-      currentItems.filter((item) => item.id !== productId)
+      currentItems.filter((item) => item._id !== productId)
     );
   };
 
@@ -69,6 +70,11 @@ const Cart = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
     <>
@@ -98,18 +104,13 @@ const Cart = () => {
                 <ul className="divide-y divide-gray-200 dark:divide-slate-700">
                   {cartItems.map((item) => (
                     <li
-                      key={item.id}
+                      key={item._id}
                       className="flex flex-col sm:flex-row items-center p-6 gap-6"
                     >
                       <img
-                        src={item.imageUrl}
+                        src={item.image}
                         alt={item.name}
                         className="w-28 h-28 rounded-lg object-cover flex-shrink-0 shadow-sm"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src =
-                            "https://placehold.co/100x100/CCCCCC/FFFFFF?text=Error";
-                        }}
                       />
                       <div className="flex-grow text-center sm:text-left">
                         <h3 className="text-lg font-bold text-gray-800 dark:text-white">
@@ -119,14 +120,14 @@ const Cart = () => {
                           {item.description}
                         </p>
                         <p className="text-md font-bold text-teal-600 dark:text-teal-400 mt-2">
-                          ${item.price}
+                          {item.price}
                         </p>
                       </div>
                       <div className="flex items-center gap-4">
                         {/* Quantity Controls */}
                         <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
                           <button
-                            onClick={() => handleQuantityChange(item.id, -1)}
+                            onClick={() => handleQuantityChange(item._id, -1)}
                             className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-l-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                           >
                             <Minus />
@@ -135,7 +136,7 @@ const Cart = () => {
                             {item.quantity}
                           </span>
                           <button
-                            onClick={() => handleQuantityChange(item.id, 1)}
+                            onClick={() => handleQuantityChange(item._id, 1)}
                             className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-r-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                           >
                             <Plus />
@@ -143,7 +144,7 @@ const Cart = () => {
                         </div>
                         {/* Remove Button */}
                         <button
-                          onClick={() => handleRemoveItem(item.id)}
+                          onClick={() => handleRemoveItem(item._id)}
                           className="text-gray-500 dark:text-slate-400 hover:text-red-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/50 rounded-full p-2"
                           aria-label={`Remove ${item.name}`}
                         >
@@ -155,6 +156,17 @@ const Cart = () => {
                 </ul>
               )}
             </div>
+
+            {cartItems.length > 0 && (
+              <div className="mt-6 flex justify-between items-center bg-gray-200 dark:bg-gray-700 p-4 rounded-lg">
+                <span className="text-lg font-semibold text-gray-800 dark:text-white">
+                  Total:
+                </span>
+                <span className="text-lg font-bold text-teal-600 dark:text-teal-400">
+                  ₹{totalPrice.toFixed(2)}
+                </span>
+              </div>
+            )}
 
             {cartItems.length > 0 && (
               <button

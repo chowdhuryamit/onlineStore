@@ -4,6 +4,8 @@ import { Search, LogIn, X, Menu, ShoppingCart, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSelector,useDispatch } from "react-redux";
 import {logout} from '../store/authSlice.js';
+import axios from "axios"
+import toast from "react-hot-toast";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,9 +15,21 @@ const Header = () => {
 //   const product = useSelector((state) => state.auth.cart);
 //  console.log(product);;
  
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post("http://localhost:8000/api/v1/user/logout",{}, { withCredentials: true });
+      if(response.data.success){
+        toast.success(response.data.message);
+        dispatch(logout());
+        navigate("/login");
+      }
+      else{
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message||error.message);
+    }
+    
   }
 
   return (

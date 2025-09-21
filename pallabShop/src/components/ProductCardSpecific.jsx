@@ -1,18 +1,19 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../store/authSlice.js';
+import toast from "react-hot-toast";
 
 const ProductCardSpecific = ({ product}) => {
   const dispatch = useDispatch();
   const handleAddToCart = () => {
     dispatch(addToCart(product));
-    alert('Product added to cart!');
+    toast.success("Product added to cart");
   }
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col group hover:-translate-y-1 transition-all duration-300 border-2 border-amber-300">
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col group hover:-translate-y-1 transition-all duration-300 border-2 border-amber-300 hover:shadow-lg hover:shadow-black">
       <div className="relative h-64">
         <img 
-          src={product.imageUrl} 
+          src={product.image} 
           alt={product.name} 
           className="w-full h-full object-cover" 
         />

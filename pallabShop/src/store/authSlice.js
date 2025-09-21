@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  status: false,
+  status: true,
   cart: [],
 };
 
@@ -16,16 +16,19 @@ const authSlice = createSlice({
       state.status = false;
     },
     addToCart: (state, action) => {
-      const itemExists = state.cart.find((item) => item.id === action.payload.id);
+      const itemExists = state.cart.find((item) => item._id === action.payload._id);
       if (!itemExists) {
         state.cart.push(action.payload);
       } 
     },
     removeFromCart: (state, action) => {
-      state.cart = state.cart.filter((item) => item.id !== action.payload);
+      state.cart = state.cart.filter((item) => item._id !== action.payload);
+    },
+    clearCart: (state) => {
+      state.cart = [];
     },
   },
 });
 
-export const { login, logout, addToCart, removeFromCart } = authSlice.actions;
+export const { login, logout, addToCart, removeFromCart,clearCart } = authSlice.actions;
 export default authSlice.reducer;
