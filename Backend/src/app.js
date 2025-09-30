@@ -20,7 +20,7 @@ app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "../../pallabShop/dist")));
+app.use(express.static(path.join(__dirname, "../dist")));
 
 
 import userRoutes from "./routes/user.auth.routes.js";
@@ -32,7 +32,7 @@ app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/order", orderRoutes);
 
 app.get(/^(?!\/api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../../pallabShop/dist", "index.html"));
+  res.sendFile(path.join(__dirname, "../dist", "index.html"));
 });
 
 export default app;
