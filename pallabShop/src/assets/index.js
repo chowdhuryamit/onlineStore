@@ -8,6 +8,7 @@ import bread from './bread.jpg'
 import cakes from './cakes.jpg'
 import snacks from './snacks.webp'
 import drinks from './drinks.jpg'
+import logo from './logo.svg'
 
 export{
     shopImage,
@@ -19,5 +20,6 @@ export{
     bread,
     cakes,
     snacks,
-    drinks
+    drinks,
+    logo
 };

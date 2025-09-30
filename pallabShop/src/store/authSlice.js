@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  status: true,
+  status: false,
   cart: [],
 };
 
@@ -27,8 +27,11 @@ const authSlice = createSlice({
     clearCart: (state) => {
       state.cart = [];
     },
+    setCart: (state, action) => {
+      state.cart = action.payload;
+    },
   },
 });
 
-export const { login, logout, addToCart, removeFromCart,clearCart } = authSlice.actions;
+export const { login, logout, addToCart, removeFromCart,clearCart,setCart} = authSlice.actions;
 export default authSlice.reducer;

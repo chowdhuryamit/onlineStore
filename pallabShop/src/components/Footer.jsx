@@ -1,111 +1,93 @@
 import React from "react";
+import { Link, useNavigate } from 'react-router-dom';
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = (path) => {
+    navigate(path);
+    window.scrollTo(0, 0);
+  };
+
+  const productCategories = ["Rice", "Wheat", "Oil", "Cakes", "Drinks", "Biscuit", "Ghee", "Snacks"];
+  const aboutLinks = [
+    { name: "Sign In", path: "/login" },
+    { name: "Your Cart", path: "/cart" },
+    { name: "Home", path: "/" },
+  ];
   return (
     <footer className="bg-gray-100 border-t border-gray-200">
       <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {/* Product Categories */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase">
-              Shop
+            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase mb-4">
+              Our Product Categories
             </h3>
-            <ul className="mt-4 space-y-2">
-              <li>
-                <a
-                  href="#"
-                  className="text-base text-gray-500 hover:text-gray-900"
-                >
-                  New Arrivals
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-base text-gray-500 hover:text-gray-900"
-                >
-                  Best Sellers
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-base text-gray-500 hover:text-gray-900"
-                >
-                  All Products
-                </a>
-              </li>
+            <ul className="space-y-2">
+              {productCategories.map((cat) => (
+                <li key={cat}>
+                  <Link
+                    to={`/product?category=${cat}`}
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-base text-gray-500 hover:text-gray-900"
+                  >
+                    {cat}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
+
+          {/* About */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase">
+            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase mb-4">
               About
             </h3>
-            <ul className="mt-4 space-y-2">
+            <ul className="space-y-2">
+              {aboutLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.path}
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-base text-gray-500 hover:text-gray-900"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase mb-4">
+              Contact Us
+            </h3>
+            <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
-                  className="text-base text-gray-500 hover:text-gray-900"
-                >
-                  Our Story
-                </a>
+                <p className="text-base text-gray-500">Bishalgarh, Tripura</p>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-base text-gray-500 hover:text-gray-900"
-                >
-                  Sustainability
-                </a>
+                <p className="text-base text-gray-500">India, 799102</p>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-base text-gray-500 hover:text-gray-900"
-                >
-                  Contact
+                <a href="mailto:support@example.com" className="text-base text-gray-500 hover:text-gray-900">
+                  support@example.com
                 </a>
               </li>
             </ul>
           </div>
-          <div className="col-span-2 md:col-span-2">
-            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase">
-              Join our newsletter
-            </h3>
-            <p className="mt-4 text-base text-gray-500">
-              Get the latest arrivals, special offers, and behind-the-scenes
-              stories.
-            </p>
-            <form className="mt-4 flex sm:max-w-md">
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                type="email"
-                name="email-address"
-                id="email-address"
-                autoComplete="email"
-                required
-                className="w-full min-w-0 appearance-none rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
-                placeholder="Enter your email"
-              />
-              <div className="ml-4 flex-shrink-0">
-                <button
-                  type="submit"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-gray-800 py-2 px-4 text-base font-medium text-white shadow-sm hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                >
-                  Sign up
-                </button>
-              </div>
-            </form>
-          </div>
         </div>
+
+        {/* Footer Bottom */}
         <div className="mt-12 border-t border-gray-300 pt-8 text-center">
           <p className="text-base text-gray-400">
-            &copy; 2025 AETHER. All rights reserved.
+            &copy; {new Date().toLocaleDateString()} Amit Chowdhury. All rights reserved.
           </p>
         </div>
       </div>
     </footer>
+
   );
 };
 

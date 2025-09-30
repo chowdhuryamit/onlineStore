@@ -25,7 +25,7 @@ const PurchaseFormModal = ({ product, onClose }) => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/order/placeOrder",
+        "/api/v1/order/placeOrder",
         { order }
       );
       if (response.data.success) {

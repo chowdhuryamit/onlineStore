@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 
 const getSpecificProducts = async (category,setProducts) => {
  try {
-    const response = await axios.get(`http://localhost:8000/api/v1/product/getProducts?category=${category}`);
+    const response = await axios.get(`/api/v1/product/getProducts?category=${category}`);
     if(response.data.success){
       setProducts(response.data.products);
       toast.success(response.data.message);

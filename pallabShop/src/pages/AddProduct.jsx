@@ -8,7 +8,6 @@ const AddProduct = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [uniqueId, setUniqueId] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -34,7 +33,7 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!productName || !description || !price || !category || !uniqueId) {
+    if (!productName || !description || !price || !category) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -46,10 +45,9 @@ const AddProduct = () => {
       formData.append("description", description);
       formData.append("price", price);
       formData.append("category", category);
-      formData.append("uniqueId", uniqueId);
       if (imageFile) formData.append("image", imageFile);
       const response = await axios.post(
-        "http://localhost:8000/api/v1/product/add",
+        "/api/v1/product/add",
         formData,
         {
           withCredentials: true,
@@ -61,7 +59,6 @@ const AddProduct = () => {
         setDescription("");
         setPrice("");
         setCategory("");
-        setUniqueId("");
         setImageFile(null);
         setIsDragging(false);
       } else {
@@ -172,19 +169,6 @@ const AddProduct = () => {
                 <option value="Snack">Snack</option>
                 <option value="Drink">Drink</option>
               </select>
-            </div>
-
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium mb-2">
-                Unique ID
-              </label>
-              <input
-                type="text"
-                value={uniqueId}
-                onChange={handleInputChange(setUniqueId)}
-                placeholder="uniqueId"
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 dark:text-white"
-              />
             </div>
           </div>
 

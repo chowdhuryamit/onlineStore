@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { PurchaseFormModal } from "../components/index.js";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch} from "react-redux";
 import { Plus, Minus, Trash2 } from "lucide-react";
+import { setCart } from "../store/authSlice.js";
+
 
 const Cart = () => {
   // const [cartItems, setCartItems] = useState([
@@ -31,21 +33,24 @@ const Cart = () => {
   //   },
   // ]);
   const cartFromRedux = useSelector((state) => state.auth.cart);
+  const dispatch = useDispatch();
 
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() =>
+    cartFromRedux.map((item) => ({ ...item, quantity: item.quantity || 1 }))
+  );
 
-  useEffect(() => {
-    setCartItems(cartFromRedux.map((item) => ({ ...item, quantity: 1 })));
-  }, [cartFromRedux]);
+  // useEffect(() => {
+  //   setCartItems(cartFromRedux.map((item) => ({ ...item, quantity: 1 })));
+  // }, [cartFromRedux]);
 
   const handleQuantityChange = (id, delta) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item._id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) } // min 1
-          : item
-      )
+    const updatedItems = cartItems.map((item) =>
+      item._id === id
+        ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+        : item
     );
+    setCartItems(updatedItems);
+    dispatch(setCart(updatedItems)); // persist to redux
   };
 
   //console.log(product);;
@@ -56,9 +61,9 @@ const Cart = () => {
    * @param {number} productId - The ID of the product to remove.
    */
   const handleRemoveItem = (productId) => {
-    setCartItems((currentItems) =>
-      currentItems.filter((item) => item._id !== productId)
-    );
+    const updatedItems = cartItems.filter((item) => item._id !== id);
+    setCartItems(updatedItems);
+    dispatch(setCart(updatedItems)); // persist to redux
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -120,7 +125,7 @@ const Cart = () => {
                           {item.description}
                         </p>
                         <p className="text-md font-bold text-teal-600 dark:text-teal-400 mt-2">
-                          {item.price}
+                        ₹ {item.price}
                         </p>
                       </div>
                       <div className="flex items-center gap-4">
@@ -163,7 +168,7 @@ const Cart = () => {
                   Total:
                 </span>
                 <span className="text-lg font-bold text-teal-600 dark:text-teal-400">
-                  ₹{totalPrice.toFixed(2)}
+                  ₹ {totalPrice.toFixed(2)}
                 </span>
               </div>
             )}

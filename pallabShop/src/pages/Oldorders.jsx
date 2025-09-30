@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const getOldOrders = async (setOrders) =>{
   try {
-    const response = await axios.get("http://localhost:8000/api/v1/order/oldOrders",{withCredentials:true});
+    const response = await axios.get("/api/v1/order/oldOrders",{withCredentials:true});
     if(response.data.success){
       toast.success(response.data.message);
       setOrders(response.data.orders);

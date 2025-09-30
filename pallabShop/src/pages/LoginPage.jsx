@@ -18,7 +18,7 @@ const LoginPage = () => {
   const handlePasswordLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/api/v1/user/login",{password,passkey},{withCredentials:true});
+      const response = await axios.post("/api/v1/user/login",{password,passkey},{withCredentials:true});
       if(response.data.success){
         dispatch(login());
         setPassword("");

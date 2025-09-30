@@ -18,14 +18,13 @@ const addProduct = async (req, res) => {
       return res.status(400).json({ success: false, message: "invalid user" });
     }
 
-    const { name, description, category, price, uniqueId } = req.body;
+    const { name, description, category, price} = req.body;
 
     if (
       !name ||
       !description ||
       !category ||
       !price ||
-      !uniqueId ||
       !req.file
     ) {
       return res
@@ -60,7 +59,6 @@ const addProduct = async (req, res) => {
       description,
       category,
       price,
-      uniqueId,
       image: result.secure_url,
     });
     if (!product) {

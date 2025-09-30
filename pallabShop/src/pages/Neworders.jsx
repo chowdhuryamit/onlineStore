@@ -26,7 +26,7 @@ const Neworders = () => {
 
   const handleFulfillOrder = async (orderId) => {
     try {
-      const response = await axios.patch("http://localhost:8000/api/v1/order/fullfillOrder",{orderId},{withCredentials:true});
+      const response = await axios.patch("/api/v1/order/fullfillOrder",{orderId},{withCredentials:true});
       if(response.data.success){
         toast.success(response.data.message);
         setOrders((prevOrders) => prevOrders.filter((o) => o._id !== orderId));
