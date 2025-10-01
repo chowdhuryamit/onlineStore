@@ -35,14 +35,14 @@ const HeroSection = () => {
             delaySpeed={2000}
           />
         </h1>
-        <p className="mt-6 text-lg text-blue-100 max-w-2xl font-bold">
+        <p className="mt-6 text-lg text-lime-300 max-w-2xl font-bold">
           Where quality meets your daily needs.Freshness you can trust, for
           every meal.Bringing nature’s best to your basket. Your trusted source
           for everyday goodness.
         </p>
         <a
           href="#productGrid"
-          className="mt-10 inline-block rounded-lg bg-white px-8 py-3 text-base font-semibold text-gray-900 shadow-md hover:bg-gray-100 transition-colors"
+          className="mt-10 inline-block rounded-lg bg-yellow-200 px-8 py-3 text-base font-semibold text-lime-600 shadow-md hover:bg-gray-100 transition-colors"
         >
           Shop The Collection
         </a>

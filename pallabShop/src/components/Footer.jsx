@@ -16,7 +16,7 @@ const Footer = () => {
     { name: "Home", path: "/" },
   ];
   return (
-    <footer className="bg-gray-100 border-t border-gray-200">
+    <footer className="bg-gray-100 border-t border-gray-800">
       <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {/* Product Categories */}
@@ -80,7 +80,7 @@ const Footer = () => {
         </div>
 
         {/* Footer Bottom */}
-        <div className="mt-12 border-t border-gray-300 pt-8 text-center">
+        <div className="mt-2 border-t border-gray-300 pt-2 text-center">
           <p className="text-base text-gray-400">
             &copy; {new Date().toLocaleDateString()} Amit Chowdhury. All rights reserved.
           </p>
