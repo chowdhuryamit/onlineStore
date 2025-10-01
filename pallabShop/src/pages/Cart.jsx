@@ -61,7 +61,7 @@ const Cart = () => {
    * @param {number} productId - The ID of the product to remove.
    */
   const handleRemoveItem = (productId) => {
-    const updatedItems = cartItems.filter((item) => item._id !== id);
+    const updatedItems = cartItems.filter((item) => item._id !== productId);
     setCartItems(updatedItems);
     dispatch(setCart(updatedItems)); // persist to redux
   };
