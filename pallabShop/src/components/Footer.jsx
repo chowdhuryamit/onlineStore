@@ -30,7 +30,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {/* Product Categories */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase mb-4">
+            <h3 className="text-sm font-bold text-black tracking-wider uppercase mb-4">
               Our Product Categories
             </h3>
             <ul className="space-y-2">
@@ -50,7 +50,7 @@ const Footer = () => {
 
           {/* About */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase mb-4">
+            <h3 className="text-sm font-bold text-black tracking-wider uppercase mb-4">
               About
             </h3>
             <ul className="space-y-2">
@@ -69,7 +69,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-gray-600 tracking-wider uppercase mb-4">
+            <h3 className="text-sm font-bold text-black tracking-wider uppercase mb-4">
               Contact Us
             </h3>
             <ul className="space-y-2">
