@@ -32,12 +32,12 @@ const Cart = () => {
   //     imageUrl: "https://placehold.co/100x100/AEC9E0/3E5A74?text=Headphones",
   //   },
   // ]);
-  const cartFromRedux = useSelector((state) => state.auth.cart);
+  const cartItems = useSelector((state) => state.auth.cart);
   const dispatch = useDispatch();
 
-  const [cartItems, setCartItems] = useState(() =>
-    cartFromRedux.map((item) => ({ ...item, quantity: item.quantity || 1 }))
-  );
+  // const [cartItems, setCartItems] = useState(() =>
+  //   cartFromRedux.map((item) => ({ ...item, quantity: item.quantity || 1 }))
+  // );
 
   // useEffect(() => {
   //   setCartItems(cartFromRedux.map((item) => ({ ...item, quantity: 1 })));
@@ -49,7 +49,7 @@ const Cart = () => {
         ? { ...item, quantity: Math.max(1, item.quantity + delta) }
         : item
     );
-    setCartItems(updatedItems);
+    //setCartItems(updatedItems);
     dispatch(setCart(updatedItems)); // persist to redux
   };
 
@@ -62,7 +62,7 @@ const Cart = () => {
    */
   const handleRemoveItem = (productId) => {
     const updatedItems = cartItems.filter((item) => item._id !== productId);
-    setCartItems(updatedItems);
+    //setCartItems(updatedItems);
     dispatch(setCart(updatedItems)); // persist to redux
   };
 

@@ -28,6 +28,16 @@ const Header = () => {
     "Cakes",
     "Snacks",
     "Drinks",
+    "Toothpaste",
+    "Cosmetics",
+    "Sanitation & Hygiene Products",
+    "Grains",
+    "Spices & Masalas",
+    "Pooja Samagri",
+    "Vegetables & Herbs",
+    "Hardware & Tools",
+    "Books & Stationery",
+    "Sports"
   ];
 
   const handleLogout = async () => {
@@ -55,7 +65,7 @@ const Header = () => {
       (cat) => cat.toLowerCase() === q.toLowerCase()
     );
     if (match) {
-      navigate(`/product?category=${match}`);
+      navigate(`/product?category=${encodeURIComponent(match)}`);
       setShowSearch(false);
       setQuery("");
     } else {
@@ -91,6 +101,12 @@ const Header = () => {
             >
               Home
             </button>
+            <button
+              className="block px-3 py-2 rounded-md text-base font-semibold text-white bg-white/20 hover:bg-white/30 transition-colors"
+              onClick={() => navigate("/manualOrder")}
+            >
+              Manual Order
+            </button>
             {authStatus && (
               <>
                 <button
@@ -113,27 +129,7 @@ const Header = () => {
                 </button>
               </>
             )}
-            <button
-              className="block px-3 py-2 rounded-md text-base font-semibold text-white bg-white/20 hover:bg-white/30 transition-colors"
-              onClick={() => navigate("/cart")}
-            >
-              Your Cart
-            </button>
-            {!authStatus ? (
-              <button
-                className="block px-3 py-2 rounded-md text-base font-semibold text-white bg-white/20 hover:bg-white/30 transition-colors"
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </button>
-            ) : (
-              <button
-                className="block px-3 py-2 rounded-md text-base font-semibold text-white bg-white/20 hover:bg-white/30 transition-colors"
-                onClick={() => handleLogout()}
-              >
-                Logout
-              </button>
-            )}
+            
           </div>
 
           {/* Icons + Mobile Toggle */}
@@ -227,6 +223,12 @@ const Header = () => {
             >
               Home
             </button>
+            <button
+              className="block px-3 py-2 rounded-md text-base font-semibold text-white bg-white/20 hover:bg-white/30 transition-colors"
+              onClick={() => navigate("/manualOrder")}
+            >
+              Manual Order
+            </button>
             {authStatus && (
               <>
                 <button
@@ -248,27 +250,6 @@ const Header = () => {
                   Old Orders
                 </button>
               </>
-            )}
-            <button
-              className="block px-3 py-2 rounded-md text-base font-semibold text-white bg-white/20 hover:bg-white/30 transition-colors"
-              onClick={() => navigate("/cart")}
-            >
-              Your Cart
-            </button>
-            {!authStatus ? (
-              <button
-                className="block px-3 py-2 rounded-md text-base font-semibold text-white bg-white/20 hover:bg-white/30 transition-colors"
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </button>
-            ) : (
-              <button
-                className="block px-3 py-2 rounded-md text-base font-semibold text-white bg-white/20 hover:bg-white/30 transition-colors"
-                onClick={() => handleLogout()}
-              >
-                Logout
-              </button>
             )}
           </div>
         )}

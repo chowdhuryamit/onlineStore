@@ -1,31 +1,39 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Ordercard } from "../components/index.js";
-import { CheckCircle} from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const getOldOrders = async (setOrders) =>{
+const getOldOrders = async (setOrders,page,setTotalPages) => {
   try {
-    const response = await axios.get("/api/v1/order/oldOrders",{withCredentials:true});
-    if(response.data.success){
+    const response = await axios.get(
+      "/api/v1/order/oldOrders",
+      { params: { page: page},
+        withCredentials: true
+      }
+    );
+    if (response.data.success) {
       toast.success(response.data.message);
       setOrders(response.data.orders);
-    }
-    else{
+      setTotalPages(response.data.totalPages);
+    } else {
       toast.error(response.data.message);
       setOrders([]);
     }
   } catch (error) {
-    toast.error(error.response?.data?.message||error.message);
+    toast.error(error.response?.data?.message || error.message);
   }
-}
+};
 
 const Oldorders = () => {
   const [orders, setOrders] = useState([]);
- 
-  useEffect(()=>{
-    getOldOrders(setOrders);
-  },[])
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [serial, setSerial] = useState(0);
+
+  useEffect(() => {
+    getOldOrders(setOrders,page,setTotalPages);
+  }, [page]);
 
   return (
     <div className="bg-gray-100 dark:bg-gray-900 min-h-screen font-sans text-gray-900 dark:text-gray-100 p-4 sm:p-6 lg:p-8">
@@ -38,14 +46,17 @@ const Oldorders = () => {
             </h2>
           </div>
 
-          <div className="flex flex-col items-center gap-6 w-full max-w-lg">
+          <div
+            className="flex flex-col items-center gap-6 w-full max-w-lg"
+            id="scrollableDiv"
+          >
             {orders.length > 0 ? (
-              orders.map((order) => (
+              orders.map((order,index) => (
                 <div
                   key={order._id}
                   className="w-full bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:scale-[1.02] transition-all"
                 >
-                  <Ordercard order={order} />
+                  <Ordercard order={order} serialNo={serial+index}/>
                 </div>
               ))
             ) : (
@@ -55,6 +66,30 @@ const Oldorders = () => {
                 </p>
               </div>
             )}
+            <div className="flex justify-end mt-4 gap-2">
+              <button
+                onClick={() => {
+                  if (page > 1) {
+                    setPage(page - 1),
+                    setSerial((prev)=>prev-5);
+                  }
+                }}
+                disabled={page === 1}
+                className="px-3 py-1 border rounded-md text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+              >
+                Previous
+              </button>
+              <button
+                onClick={() => {
+                  setPage(page + 1),
+                  setSerial((prev)=>prev+5);
+                }}
+                disabled={page === totalPages}
+                className="px-3 py-1 border rounded-md text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </section>
       </div>

@@ -163,11 +163,21 @@ const AddProduct = () => {
                 <option value="Biscuit">Biscuit</option>
                 <option value="Wheat">Wheat</option>
                 <option value="Ghee">Ghee</option>
-                <option value="Oil">Oil</option>
+                <option value="Edible Oils">Edible Oils</option>
                 <option value="Bread">Bread</option>
-                <option value="Cake">Cake</option>
-                <option value="Snack">Snack</option>
-                <option value="Drink">Drink</option>
+                <option value="Cakes">Cakes</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Drinks">Drinks</option>
+                <option value="Toothpaste">Toothpaste</option>
+                <option value="Cosmetics">Cosmetics</option>
+                <option value="Sanitation & Hygiene Products">Sanitation & Hygiene Products</option>
+                <option value="Grains">Grains</option>
+                <option value="Spices & Masalas">Spices & Masalas</option>
+                <option value="Pooja Samagri">Pooja Samagri</option>
+                <option value="Vegetables & Herbs">Vegetables & Herbs</option>
+                <option value="Hardware & Tools">Hardware & Tools</option>
+                <option value="Books & Stationery">Books & Stationery</option>
+                <option value="Sports">Sports</option>
               </select>
             </div>
           </div>

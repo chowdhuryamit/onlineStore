@@ -9,7 +9,16 @@ const Footer = () => {
     window.scrollTo(0, 0);
   };
 
-  const productCategories = ["Rice", "Wheat", "Oil", "Cakes", "Drinks", "Biscuit", "Ghee", "Snacks"];
+  const productCategories = ["Rice", "Wheat", "Oil", "Cakes", "Drinks", "Biscuit", "Ghee", "Snacks","Toothpaste",
+    "Cosmetics",
+    "Sanitation & Hygiene Products",
+    "Grains",
+    "Spices & Masalas",
+    "Pooja Samagri",
+    "Vegetables & Herbs",
+    "Hardware & Tools",
+    "Books & Stationery",
+    "Sports"];
   const aboutLinks = [
     { name: "Sign In", path: "/login" },
     { name: "Your Cart", path: "/cart" },
@@ -28,7 +37,7 @@ const Footer = () => {
               {productCategories.map((cat) => (
                 <li key={cat}>
                   <Link
-                    to={`/product?category=${cat}`}
+                    to={`/product?category=${encodeURIComponent(cat)}`}
                     onClick={() => window.scrollTo(0, 0)}
                     className="text-base text-gray-500 hover:text-gray-900"
                   >
@@ -65,14 +74,17 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <p className="text-base text-gray-500">Bishalgarh, Tripura</p>
+                <p className="text-base text-gray-500">Dighaliya, Mohanpur, West Tripura</p>
               </li>
               <li>
-                <p className="text-base text-gray-500">India, 799102</p>
+                <p className="text-base text-gray-500">Get support: 9378098656</p>
+              </li>
+              <li>
+                <p className="text-base text-gray-500">India, 799211</p>
               </li>
               <li>
                 <a href="mailto:support@example.com" className="text-base text-gray-500 hover:text-gray-900">
-                  support@example.com
+                  pallabacharjee2020@gmail.com
                 </a>
               </li>
             </ul>

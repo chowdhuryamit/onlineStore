@@ -5,7 +5,7 @@ import App from './App.jsx'
 import {Provider} from 'react-redux'
 import store from './store/store.js'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import {Home, ProductPage, LoginPage,Oldders,Neworders,Cart,AddProduct} from './pages/index.js'
+import {Home, ProductPage, LoginPage,Oldders,Neworders,Cart,AddProduct,ManualOrder} from './pages/index.js'
 
 const router = createBrowserRouter([{
   path:'/',
@@ -38,6 +38,10 @@ const router = createBrowserRouter([{
     {
       path:'/addProduct',
       element:<AddProduct/>
+    },
+    {
+      path:'/manualOrder',
+      element:<ManualOrder/>
     }
   ]
 }])

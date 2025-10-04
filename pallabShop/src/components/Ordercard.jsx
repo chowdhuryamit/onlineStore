@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { CheckCircle } from "lucide-react";
 
-const Ordercard = ({ order, onFulfill }) => {
+const Ordercard = ({ order, onFulfill,serialNo }) => {
   const {
     _id,
     customerName,
@@ -24,6 +24,7 @@ const Ordercard = ({ order, onFulfill }) => {
   });
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out overflow-hidden">
+      <p className="text-violet-400">Order No - {serialNo+1}</p>
       <div
         className={`p-4 border-l-4 ${
           fullfilled === false ? "border-blue-500" : "border-green-500"

@@ -16,10 +16,15 @@ const authSlice = createSlice({
       state.status = false;
     },
     addToCart: (state, action) => {
-      const itemExists = state.cart.find((item) => item._id === action.payload._id);
+      const itemExists = state.cart.find(
+        (item) => item._id === action.payload._id
+      );
       if (!itemExists) {
-        state.cart.push(action.payload);
-      } 
+        state.cart.push({
+          ...action.payload,
+          quantity: 1,
+        });
+      }
     },
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter((item) => item._id !== action.payload);
@@ -33,5 +38,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, logout, addToCart, removeFromCart,clearCart,setCart} = authSlice.actions;
+export const { login, logout, addToCart, removeFromCart, clearCart, setCart } =
+  authSlice.actions;
 export default authSlice.reducer;

@@ -9,6 +9,16 @@ import cakes from './cakes.jpg'
 import snacks from './snacks.webp'
 import drinks from './drinks.jpg'
 import logo from './logo.svg'
+import cosmetics from './cosmetics.jpeg'
+import grains from './grains.jpg'
+import hardware from './hardware.jpg'
+import poja from './poja.webp'
+import sanitation from './sanitation.jpg'
+import sport from './sport.jpg'
+import stationary from './stationary.jpg'
+import toothpaste from './toothpaste.avif'
+import vegitables from './vegitables.jpg'
+import spices from './spices.jpg'
 
 export{
     shopImage,
@@ -21,5 +31,15 @@ export{
     cakes,
     snacks,
     drinks,
-    logo
+    logo,
+    cosmetics,
+    grains,
+    hardware,
+    poja,
+    sanitation,
+    sport,
+    stationary,
+    toothpaste,
+    vegitables,
+    spices
 };

@@ -90,4 +90,25 @@ const getProducts = async (req,res) =>{
     }
 }
 
-export { addProduct,getProducts };
+const editProducts = async (req,res) =>{
+  try {
+    const { id, editedPrice, editedDescription, editedAvailability } = req.body;
+    if (!id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Product ID is required" });
+    }
+
+    await Product.findByIdAndUpdate(id,{
+      description:editedDescription,
+      price:editedPrice,
+      availability:editedAvailability
+    })
+
+    return res.status(200).json({ success: true, message: "Product updated successfully" });
+  } catch (error) {
+    return res.status(400).json({success:false,message:error.message});
+  }
+}
+
+export { addProduct,getProducts,editProducts };

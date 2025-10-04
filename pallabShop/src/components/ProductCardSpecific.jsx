@@ -1,41 +1,141 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { addToCart } from '../store/authSlice.js';
+import React,{useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../store/authSlice.js";
 import toast from "react-hot-toast";
+import axios from "axios";
 
-const ProductCardSpecific = ({ product}) => {
+const ProductCardSpecific = ({ product }) => {
+  const authStatus = useSelector((state) => state.auth.status);
   const dispatch = useDispatch();
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedPrice, setEditedPrice] = useState(product.price);
+  const [editedDescription, setEditedDescription] = useState(
+    product.description
+  );
+  const [editedAvailability, setEditedAvailability] = useState(
+    product.availability
+  );
+
   const handleAddToCart = () => {
     dispatch(addToCart(product));
     toast.success("Product added to cart");
-  }
+  };
+
+  const handleSaveEdit = async (id) => {
+    try {
+      const response = await axios.post('/api/v1/product/editProduct',{id,editedPrice,editedDescription,editedAvailability},{withCredentials:true});
+      if(response.data.success){
+        toast.success(response.data.message);
+        setIsEditing(false);
+      }
+      else{
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      
+      toast.error(error.response?.data?.message||error.message);
+    }
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col group hover:-translate-y-1 transition-all duration-300 border-2 border-amber-300 hover:shadow-lg hover:shadow-black">
+      {/* Image Section */}
       <div className="relative h-64">
-        <img 
-          src={product.image} 
-          alt={product.name} 
-          className="w-full h-full object-cover" 
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         <div className="absolute bottom-0 left-0 p-6">
           <h3 className="text-white text-2xl font-bold">{product.name}</h3>
         </div>
       </div>
+
+      {/* Content Section */}
       <div className="p-6 flex flex-col flex-grow">
-        <p className="text-gray-600 mb-4 flex-grow">{product.description}</p>
-        <div className="flex justify-between items-center">
-          <p className="text-2xl font-bold text-green-500">{"\u20B9"} {product.price}</p>
-          <button 
-            onClick={handleAddToCart}
-            className="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-          >
-            Add to cart
-          </button>
+        {isEditing ? (
+          <div className="flex flex-col gap-4 mb-4">
+            <input
+              type="number"
+              value={editedPrice}
+              onChange={(e) => setEditedPrice(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <textarea
+              value={editedDescription}
+              onChange={(e) => setEditedDescription(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <div className="flex items-center gap-2">
+              <label className="text-gray-700 font-medium">Available:</label>
+              <input
+                type="checkbox"
+                checked={editedAvailability}
+                onChange={(e) => setEditedAvailability(e.target.checked)}
+                className="w-5 h-5"
+              />
+            </div>
+          </div>
+        ) : (
+          <p className="text-gray-600 mb-4 flex-grow">{product.description}</p>
+        )}
+
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-2xl font-bold text-green-500">
+            {"\u20B9"} {isEditing ? editedPrice : product.price}
+          </p>
+
+          <div className="flex gap-2">
+            {/* Admin Buttons */}
+            {authStatus && (
+              <>
+                {isEditing ? (
+                  <>
+                    <button
+                      onClick={()=>handleSaveEdit(product._id)}
+                      className="bg-green-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-800 transition-colors duration-300"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setIsEditing(false)}
+                      className="bg-gray-400 text-white font-semibold py-2 px-5 rounded-lg hover:bg-gray-600 transition-colors duration-300"
+                    >
+                      Cancel
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="bg-red-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-red-800 transition-colors duration-300"
+                  >
+                    Edit
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* User Button */}
+            {isEditing ? null : editedAvailability ? (
+              <button
+                onClick={handleAddToCart}
+                className="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-800 transition-colors duration-300"
+              >
+                Add to cart
+              </button>
+            ) : (
+              <span className="bg-gray-400 text-white font-semibold py-2 px-5 rounded-lg">
+                Product Unavailable
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCardSpecific
+export default ProductCardSpecific;

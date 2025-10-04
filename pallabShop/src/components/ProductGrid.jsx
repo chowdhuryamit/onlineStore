@@ -1,6 +1,15 @@
 import React from "react";
 import ProductCard from "./ProductCard";
-import { rice,biscuit,wheat,ghee,oil,bread,cakes,snacks,drinks } from "../assets/index.js";
+import { rice,biscuit,wheat,ghee,oil,bread,cakes,snacks,drinks,cosmetics,
+  grains,
+  hardware,
+  poja,
+  sanitation,
+  sport,
+  stationary,
+  toothpaste,
+  vegitables,
+  spices } from "../assets/index.js";
 
 const ProductGrid = () => {
   const products = [
@@ -8,11 +17,21 @@ const ProductGrid = () => {
     { id: 2, category: "Biscuit", image: biscuit },
     { id: 3, category: "Wheat", image: wheat },
     { id: 4, category: "Ghee", image: ghee },
-    { id: 5, category: "Oil", image: oil },
+    { id: 5, category: "Edible Oils", image: oil },
     { id: 6, category: "Bread", image: bread },
     { id: 7, category: "Cakes", image: cakes },
     { id: 8, category: "Snacks", image: snacks },
     { id: 9, category: "Drinks", image: drinks },
+    { id: 10, category: "Toothpaste", image:toothpaste},
+    { id: 11, category: "Cosmetics", image:cosmetics},
+    { id: 12, category: "Sanitation & Hygiene Products", image: sanitation },
+    { id: 13, category: "Grains", image: grains },
+    { id: 14, category: "Spices & Masalas", image: spices },
+    { id: 15, category: "Pooja Samagri", image: poja },
+    { id: 16, category: "Vegetables & Herbs", image: vegitables },
+    { id: 17, category: "Hardware & Tools", image: hardware },
+    { id: 18, category: "Books & Stationery", image: stationary },
+    { id: 19, category: "Sports", image: sport },
   ];
 
   return (

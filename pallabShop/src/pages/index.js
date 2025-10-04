@@ -4,7 +4,8 @@ import LoginPage from "./LoginPage.jsx";
 import Oldders from "./Oldorders.jsx";
 import Neworders from "./Neworders.jsx";
 import Cart from "./Cart.jsx";
-import AddProduct from "./AddProduct.jsx"
+import AddProduct from "./AddProduct.jsx";
+import ManualOrder from "./ManualOrder.jsx";
 
 export{
     Home,
@@ -13,5 +14,6 @@ export{
     Oldders,
     Neworders,
     Cart,
-    AddProduct
+    AddProduct,
+    ManualOrder
 }
