@@ -33,7 +33,6 @@ const ProductCardSpecific = ({ product }) => {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(error);
       
       toast.error(error.response?.data?.message||error.message);
     }
@@ -46,7 +45,7 @@ const ProductCardSpecific = ({ product }) => {
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-fill"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         <div className="absolute bottom-0 left-0 p-6">

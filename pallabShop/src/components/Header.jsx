@@ -37,7 +37,8 @@ const Header = () => {
     "Vegetables & Herbs",
     "Hardware & Tools",
     "Books & Stationery",
-    "Sports"
+    "Sports",
+    "Tea & Dairy"
   ];
 
   const handleLogout = async () => {

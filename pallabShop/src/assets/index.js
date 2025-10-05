@@ -19,6 +19,7 @@ import stationary from './stationary.jpg'
 import toothpaste from './toothpaste.avif'
 import vegitables from './vegitables.jpg'
 import spices from './spices.jpg'
+import tea from './tea.webp'
 
 export{
     shopImage,
@@ -41,5 +42,6 @@ export{
     stationary,
     toothpaste,
     vegitables,
-    spices
+    spices,
+    tea
 };

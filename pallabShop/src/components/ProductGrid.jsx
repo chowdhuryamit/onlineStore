@@ -9,7 +9,8 @@ import { rice,biscuit,wheat,ghee,oil,bread,cakes,snacks,drinks,cosmetics,
   stationary,
   toothpaste,
   vegitables,
-  spices } from "../assets/index.js";
+  spices,
+  tea } from "../assets/index.js";
 
 const ProductGrid = () => {
   const products = [
@@ -32,6 +33,7 @@ const ProductGrid = () => {
     { id: 17, category: "Hardware & Tools", image: hardware },
     { id: 18, category: "Books & Stationery", image: stationary },
     { id: 19, category: "Sports", image: sport },
+    { id: 20, category: "Tea & Dairy", image: tea },
   ];
 
   return (

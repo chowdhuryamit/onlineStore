@@ -18,7 +18,8 @@ const Footer = () => {
     "Vegetables & Herbs",
     "Hardware & Tools",
     "Books & Stationery",
-    "Sports"];
+    "Sports","Tea & Dairy"];
+    
   const aboutLinks = [
     { name: "Sign In", path: "/login" },
     { name: "Your Cart", path: "/cart" },
