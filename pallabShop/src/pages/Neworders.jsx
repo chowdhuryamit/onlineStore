@@ -39,6 +39,25 @@ const Neworders = () => {
     }
   };
 
+  const handleDelete = async (id)=>{
+    if(!id.trim()){
+      toast.error("product id is required");
+      return;
+    }
+    try {
+      const response = await axios.delete('/api/v1/order/deleteOrder',{data:{id},withCredentials:true});
+      if(response.data.success){
+       toast.success(response.data.message);
+       setOrders((prevOrders) => prevOrders.filter((o) => o._id !== id));
+      }
+      else{
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+     toast.error(error.response?.data?.message || error.message);
+    }
+ }
+
   // const newOrders = useMemo(
   //   () =>
   //     orders
@@ -72,6 +91,7 @@ const Neworders = () => {
                 key={order._id}
                 order={order}
                 onFulfill={handleFulfillOrder}
+                onDelete={handleDelete}
               />
             </div>
           ))

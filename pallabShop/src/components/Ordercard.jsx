@@ -1,7 +1,9 @@
 import React, { useMemo } from "react";
 import { CheckCircle } from "lucide-react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-const Ordercard = ({ order, onFulfill,serialNo }) => {
+const Ordercard = ({ order, onFulfill, serialNo, onDelete }) => {
   const {
     _id,
     customerName,
@@ -22,9 +24,10 @@ const Ordercard = ({ order, onFulfill,serialNo }) => {
     hour: "2-digit",
     minute: "2-digit",
   });
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out overflow-hidden">
-      <p className="text-violet-400">Order No - {serialNo+1}</p>
+      <p className="text-violet-400">Order No - {serialNo + 1}</p>
       <div
         className={`p-4 border-l-4 ${
           fullfilled === false ? "border-blue-500" : "border-green-500"
@@ -75,12 +78,10 @@ const Ordercard = ({ order, onFulfill,serialNo }) => {
               >
                 <span>
                   {item.name} ₹{item.price}
-                  <span className="p-1">
-                    x{item.quantity}
-                  </span>
+                  <span className="p-1">x{item.quantity}</span>
                 </span>
                 <span className="font-medium text-green-500">
-                 ₹{(item.price * item.quantity).toFixed(2)}
+                  ₹{(item.price * item.quantity).toFixed(2)}
                 </span>
               </li>
             ))}
@@ -90,19 +91,27 @@ const Ordercard = ({ order, onFulfill,serialNo }) => {
         <hr className="border-gray-200 dark:border-gray-700 my-3" />
 
         {/* Footer */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center flex-col md:flex-row md:items-center gap-3 md:gap-0">
           <p className="text-lg font-bold text-green-400">
             Total: ₹{total.toFixed(2)}
           </p>
           {fullfilled === false && (
-            <button
-              onClick={() => onFulfill(_id)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900 transition-colors duration-300"
-            >
-              <CheckCircle className="w-5 h-5" />
-              <span>Fulfill Order</span>
-            </button>
+            <div className="flex flex-col md:flex-row gap-2">
+              <button
+                onClick={() => onFulfill(_id)}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900 transition-colors duration-300"
+              >
+                <CheckCircle className="w-5 h-5" />
+                <span>Fulfill Order</span>
+              </button>
+            </div>
           )}
+          <button
+            onClick={() => onDelete(_id)}
+            className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900 transition-colors duration-300"
+          >
+            <span>Delete</span>
+          </button>
         </div>
       </div>
     </div>

@@ -128,4 +128,17 @@ const orderFullfiled = async (req, res) => {
   }
 };
 
-export { addOrder, newOrders, orderFullfiled, oldOrders };
+const deleteOrder = async (req,res) => {
+  try {
+    const {id} = req.body;
+    if(!id){
+      return res.status(400).json({success:false,message:'order id is required'});
+    }
+    await Order.findByIdAndDelete(id);
+    return res.status(200).json({success:true,message:'order deleted successfully'});
+  } catch (error) {
+    return res.status(400).json({success:false,message:error.message})
+  }
+}
+
+export { addOrder, newOrders, orderFullfiled, oldOrders,deleteOrder };

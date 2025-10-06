@@ -35,6 +35,25 @@ const Oldorders = () => {
     getOldOrders(setOrders,page,setTotalPages);
   }, [page]);
 
+  const handleDelete = async (id)=>{
+    if(!id.trim()){
+      toast.error("product id is required");
+      return;
+    }
+    try {
+      const response = await axios.delete('/api/v1/order/deleteOrder',{data:{id},withCredentials:true});
+      if(response.data.success){
+       toast.success(response.data.message);
+       setOrders((prevOrders) => prevOrders.filter((o) => o._id !== id));
+      }
+      else{
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+     toast.error(error.response?.data?.message || error.message);
+    }
+ }
+
   return (
     <div className="bg-gray-100 dark:bg-gray-900 min-h-screen font-sans text-gray-900 dark:text-gray-100 p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
@@ -56,7 +75,7 @@ const Oldorders = () => {
                   key={order._id}
                   className="w-full bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:scale-[1.02] transition-all"
                 >
-                  <Ordercard order={order} serialNo={serial+index}/>
+                  <Ordercard order={order} serialNo={serial+index} onDelete={handleDelete}/>
                 </div>
               ))
             ) : (
