@@ -18,15 +18,9 @@ const addProduct = async (req, res) => {
       return res.status(400).json({ success: false, message: "invalid user" });
     }
 
-    const { name, description, category, price} = req.body;
+    const { name, description, category, price } = req.body;
 
-    if (
-      !name ||
-      !description ||
-      !category ||
-      !price ||
-      !req.file
-    ) {
+    if (!name || !description || !category || !price || !req.file) {
       return res
         .status(400)
         .json({ success: false, message: "all fields are required" });
@@ -74,24 +68,39 @@ const addProduct = async (req, res) => {
   }
 };
 
-const getProducts = async (req,res) =>{
-    try {
-        const {category} = req.query;
-        if(!category){
-            return res.status(400).json({success:false,message:"category is required"});
-        }
-        const products = await Product.find({category});
-        if(!products){
-            return res.status(400).json({success:false,message:"no products found"});
-        }
-        return res.status(200).json({success:true,message:"products fetched successfully",products});
-    } catch (error) {
-        return res.status(400).json({success:false,message:error.message});
-    }
-}
-
-const editProducts = async (req,res) =>{
+const getProducts = async (req, res) => {
   try {
+    const { category } = req.query;
+    if (!category) {
+      return res
+        .status(400)
+        .json({ success: false, message: "category is required" });
+    }
+    const products = await Product.find({ category });
+    if (!products) {
+      return res
+        .status(400)
+        .json({ success: false, message: "no products found" });
+    }
+    return res
+      .status(200)
+      .json({
+        success: true,
+        message: "products fetched successfully",
+        products,
+      });
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+const editProducts = async (req, res) => {
+  try {
+    if (!req.email || req.email !== process.env.EMAIL) {
+      return res
+        .status(400)
+        .json({ success: false, message: "You are not authorized to do so." });
+    }
     const { id, editedPrice, editedDescription, editedAvailability } = req.body;
     if (!id) {
       return res
@@ -99,16 +108,60 @@ const editProducts = async (req,res) =>{
         .json({ success: false, message: "Product ID is required" });
     }
 
-    await Product.findByIdAndUpdate(id,{
-      description:editedDescription,
-      price:editedPrice,
-      availability:editedAvailability
-    })
+    await Product.findByIdAndUpdate(id, {
+      description: editedDescription,
+      price: editedPrice,
+      availability: editedAvailability,
+    });
 
-    return res.status(200).json({ success: true, message: "Product updated successfully" });
+    return res
+      .status(200)
+      .json({ success: true, message: "Product updated successfully" });
   } catch (error) {
-    return res.status(400).json({success:false,message:error.message});
+    return res.status(400).json({ success: false, message: error.message });
   }
-}
+};
 
-export { addProduct,getProducts,editProducts };
+const deleteProduct = async (req, res) => {
+  try {
+    if (!req.email || req.email !== process.env.EMAIL) {
+      return res
+        .status(400)
+        .json({ success: false, message: "You are not authorized to do so." });
+    }
+    const { id } = req.body;
+    if (!id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "product id is required" });
+    }
+    const product = await Product.findById(id);
+    if (!product) {
+      return res
+        .status(400)
+        .json({ success: false, message: "product not found" });
+    }
+    const url = product.image;
+    const parts = url.split("/upload/")[1];
+    const public_id = parts
+      .split("/")
+      .slice(1) 
+      .join("/") 
+      .replace(/\.[^/.]+$/, "");
+
+    if (public_id) {
+      await cloudinary.uploader.destroy(public_id, {
+        resource_type: "image",
+      });
+    }
+    
+    await product.deleteOne();
+    return res
+      .status(200)
+      .json({ success: true, message: "product deleted successfully" });
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export { addProduct, getProducts, editProducts, deleteProduct };

@@ -34,6 +34,21 @@ const ProductPage = () => {
     getSpecificProducts(category,setProducts);
   },[category])
 
+  const handleDelete = async (id) =>{
+    try {
+      const response = await axios.delete('/api/v1/product/deleteProduct',{data:{id},withCredentials:true});
+      if(response.data.success){
+        toast.success(response.data.message);
+        setProducts((prevProducts) => prevProducts.filter((p) => p._id !== id));
+      }
+      else{
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
+    }
+  }
+
   return (
     <>
       <div className={`transition-filter duration-300`}>
@@ -54,7 +69,7 @@ const ProductPage = () => {
             }
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {products.map((product) => (
-                <ProductCardSpecific key={product._id} product={product} />
+                <ProductCardSpecific key={product._id} product={product} onDelete={handleDelete} />
               ))}
             </div>
           </main>

@@ -1,10 +1,10 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/authSlice.js";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const ProductCardSpecific = ({ product }) => {
+const ProductCardSpecific = ({ product,onDelete}) => {
   const authStatus = useSelector((state) => state.auth.status);
   const dispatch = useDispatch();
 
@@ -24,17 +24,19 @@ const ProductCardSpecific = ({ product }) => {
 
   const handleSaveEdit = async (id) => {
     try {
-      const response = await axios.post('/api/v1/product/editProduct',{id,editedPrice,editedDescription,editedAvailability},{withCredentials:true});
-      if(response.data.success){
+      const response = await axios.post(
+        "/api/v1/product/editProduct",
+        { id, editedPrice, editedDescription, editedAvailability },
+        { withCredentials: true }
+      );
+      if (response.data.success) {
         toast.success(response.data.message);
         setIsEditing(false);
-      }
-      else{
+      } else {
         toast.error(response.data.message);
       }
     } catch (error) {
-      
-      toast.error(error.response?.data?.message||error.message);
+      toast.error(error.response?.data?.message || error.message);
     }
   };
 
@@ -45,7 +47,7 @@ const ProductCardSpecific = ({ product }) => {
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-fill"
+          className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         <div className="absolute bottom-0 left-0 p-6">
@@ -82,37 +84,54 @@ const ProductCardSpecific = ({ product }) => {
           <p className="text-gray-600 mb-4 flex-grow">{product.description}</p>
         )}
 
-        <div className="flex items-center justify-between gap-2">
-          <p className="text-2xl font-bold text-green-500">
+        {/* Price and Buttons */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          {/* Price */}
+          <p className="text-2xl font-bold text-green-500 flex">
             {"\u20B9"} {isEditing ? editedPrice : product.price}
           </p>
 
-          <div className="flex gap-2">
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-2 justify-end w-full md:w-auto">
             {/* Admin Buttons */}
             {authStatus && (
               <>
                 {isEditing ? (
                   <>
                     <button
-                      onClick={()=>handleSaveEdit(product._id)}
-                      className="bg-green-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-800 transition-colors duration-300"
+                      onClick={() => handleSaveEdit(product._id)}
+                      className="w-full md:w-auto bg-green-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-800 transition-colors duration-300"
                     >
                       Save
                     </button>
                     <button
                       onClick={() => setIsEditing(false)}
-                      className="bg-gray-400 text-white font-semibold py-2 px-5 rounded-lg hover:bg-gray-600 transition-colors duration-300"
+                      className="w-full md:w-auto bg-gray-400 text-white font-semibold py-2 px-5 rounded-lg hover:bg-gray-600 transition-colors duration-300"
                     >
                       Cancel
                     </button>
+                    <button
+                      onClick={() => onDelete(product._id)}
+                      className="w-full md:w-auto bg-red-700 text-white font-semibold py-2 px-5 rounded-lg hover:bg-red-900 transition-colors duration-300"
+                    >
+                      Delete
+                    </button>
                   </>
                 ) : (
-                  <button
-                    onClick={() => setIsEditing(true)}
-                    className="bg-red-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-red-800 transition-colors duration-300"
-                  >
-                    Edit
-                  </button>
+                  <>
+                    <button
+                      onClick={() => setIsEditing(true)}
+                      className="w-full md:w-auto bg-red-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-red-800 transition-colors duration-300"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => onDelete(product._id)}
+                      className="w-full md:w-auto bg-red-700 text-white font-semibold py-2 px-5 rounded-lg hover:bg-red-900 transition-colors duration-300"
+                    >
+                      Delete
+                    </button>
+                  </>
                 )}
               </>
             )}
@@ -121,12 +140,12 @@ const ProductCardSpecific = ({ product }) => {
             {isEditing ? null : editedAvailability ? (
               <button
                 onClick={handleAddToCart}
-                className="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-800 transition-colors duration-300"
+                className="w-full md:w-auto bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-800 transition-colors duration-300"
               >
                 Add to cart
               </button>
             ) : (
-              <span className="bg-gray-400 text-white font-semibold py-2 px-5 rounded-lg">
+              <span className="w-full md:w-auto bg-gray-400 text-white font-semibold py-2 px-5 rounded-lg text-center">
                 Product Unavailable
               </span>
             )}
