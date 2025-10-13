@@ -24,27 +24,31 @@ const addOrder = async (req, res) => {
       0
     );
 
-    const messageText = `New Order Placed:
-      Customer: ${savedOrder.customerName}
-      Address: ${savedOrder.customerAddress}
-      Phone: ${savedOrder.customerPhone}
-      Products: ${savedOrder.products
-       .map((p) => `${p.name} (Qty: ${p.quantity}) (₹${p.price})`)
-       .join(", ")}
-      Total Amount: ₹${totalAmount}`;
+    const messageText = `New Order Placed
+
+Customer: ${savedOrder.customerName}
+Address: ${savedOrder.customerAddress}
+Phone: ${savedOrder.customerPhone}
+
+Products:
+${savedOrder.products
+  .map((p, i) => `  ${i + 1}. ${p.name}  |  Qty: ${p.quantity}  |  ₹${p.price}`)
+  .join("\n")}
+
+Total Amount: ₹${totalAmount}`;
 
     try {
-      
       const response = await axios.post(
         `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`,
         { chat_id: process.env.CHAT_ID, text: messageText }
       );
 
-      return res
-        .status(200)
-        .json({ success: true, message: "Order placed successfully",messageText });
+      return res.status(200).json({
+        success: true,
+        message: "Order placed successfully",
+        messageText,
+      });
     } catch (error) {
-
       await Order.findByIdAndDelete(savedOrder._id);
       return res.status(400).json({
         success: false,
@@ -128,17 +132,21 @@ const orderFullfiled = async (req, res) => {
   }
 };
 
-const deleteOrder = async (req,res) => {
+const deleteOrder = async (req, res) => {
   try {
-    const {id} = req.body;
-    if(!id){
-      return res.status(400).json({success:false,message:'order id is required'});
+    const { id } = req.body;
+    if (!id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "order id is required" });
     }
     await Order.findByIdAndDelete(id);
-    return res.status(200).json({success:true,message:'order deleted successfully'});
+    return res
+      .status(200)
+      .json({ success: true, message: "order deleted successfully" });
   } catch (error) {
-    return res.status(400).json({success:false,message:error.message})
+    return res.status(400).json({ success: false, message: error.message });
   }
-}
+};
 
-export { addOrder, newOrders, orderFullfiled, oldOrders,deleteOrder };
+export { addOrder, newOrders, orderFullfiled, oldOrders, deleteOrder };

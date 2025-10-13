@@ -28,6 +28,10 @@ const ProductSchema = new mongoose.Schema(
     availability:{
       type: Boolean,
       default: true
+    },
+    discount:{
+      type:Number,
+      default:2
     }
   },
   { timestamps: true }

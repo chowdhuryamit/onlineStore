@@ -101,7 +101,7 @@ const editProducts = async (req, res) => {
         .status(400)
         .json({ success: false, message: "You are not authorized to do so." });
     }
-    const { id, editedPrice, editedDescription, editedAvailability } = req.body;
+    const { id, editedPrice, editedDescription, editedAvailability, editedDiscount} = req.body;
     if (!id) {
       return res
         .status(400)
@@ -112,6 +112,7 @@ const editProducts = async (req, res) => {
       description: editedDescription,
       price: editedPrice,
       availability: editedAvailability,
+      discount: editedDiscount
     });
 
     return res
